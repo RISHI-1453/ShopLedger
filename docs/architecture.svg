@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">ShopLedger architecture and order flow</title>
+  <desc id="desc">Browser, Express, routers, business modules, settings and JSON persistence, with the five steps for placing an order.</desc>
+  <style>
+    text { font-family: system-ui, sans-serif; fill: #183044; font-size: 16px; }
+    .heading { font-size: 39px; font-weight: 700; }
+    .card { font-size: 19px; font-weight: 700; }
+    .path, .ticket { font-family: monospace; }
+    .ticket { fill: #6841a5; font-weight: 700; }
+    .arrow { fill: none; stroke: #59758c; stroke-width: 2; marker-end: url(#arrow); }
+  </style>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 9 4.5 0 9z" fill="#59758c"/></marker></defs>
+  <rect width="1200" height="800" fill="#eef4f7"/>
+  <text x="72" y="68" class="heading">ShopLedger architecture</text>
+  <text x="72" y="100">Express POS, Khata credit and GST invoices backed by a JSON file</text>
+  <path class="arrow" d="M378 188H446 M752 188H820"/>
+  <path class="arrow" d="M968 286V306H224V326 M600 306V326 M972 286V326"/>
+  <path class="arrow" d="M224 460V540"/>
+  <g transform="translate(72 126)">
+    <rect width="306" height="134" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Browser</text>
+    <text x="18" y="56" class="path">public/index.html</text>
+    <text x="18" y="82" class="path">public/js/app.js</text>
+    <text x="18" y="108" class="path">public/css/style.css</text>
+  </g>
+  <g transform="translate(446 126)">
+    <rect width="306" height="108" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">HTTP entry point</text>
+    <text x="18" y="56" class="path">server.js</text>
+    <text x="18" y="82" class="path">Express · JSON · static UI</text>
+  </g>
+  <g transform="translate(820 126)">
+    <rect width="306" height="160" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Routers</text>
+    <text x="18" y="56" class="path">routes/orders.js</text>
+    <text x="18" y="82" class="ticket">routes/customers.js</text>
+    <text x="18" y="108" class="path">routes/products.js</text>
+    <text x="18" y="134" class="path">routes/reports.js</text>
+  </g>
+  <g transform="translate(72 326)">
+    <rect width="306" height="134" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Order and stock</text>
+    <text x="18" y="56" class="ticket">lib/orders.js</text>
+    <text x="18" y="82" class="ticket">lib/inventory.js</text>
+    <text x="18" y="108" class="ticket">lib/dates.js</text>
+  </g>
+  <g transform="translate(446 326)">
+    <rect width="306" height="160" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Billing and credit</text>
+    <text x="18" y="56" class="path">lib/pricing.js</text>
+    <text x="18" y="82" class="path">lib/tax.js</text>
+    <text x="18" y="108" class="path">lib/coupons.js</text>
+    <text x="18" y="134" class="ticket">lib/ledger.js</text>
+  </g>
+  <g transform="translate(820 326)">
+    <rect width="306" height="108" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Invoices and reports</text>
+    <text x="18" y="56" class="ticket">lib/invoice.js</text>
+    <text x="18" y="82" class="path">lib/reports.js</text>
+  </g>
+  <g transform="translate(72 540)">
+    <rect width="306" height="108" rx="14" fill="#fff" stroke="#c2d0da"/>
+    <text x="18" y="29" class="card">Persistence and settings</text>
+    <text x="18" y="56" class="path">lib/store.js  →  data/db.json</text>
+    <text x="18" y="82" class="path">config.js</text>
+  </g>
+  <rect x="446" y="540" width="680" height="207" rx="14" fill="#fff" stroke="#c2d0da"/>
+  <text x="466" y="571" class="card">Placing an order</text>
+  <text x="466" y="600">1. The browser posts the cart to POST /api/orders.</text>
+  <text x="466" y="627">2. The order router reads the store and checks product availability.</text>
+  <text x="466" y="654">3. Checkout validates the coupon, computes GST, and charges Khata if selected.</text>
+  <text x="466" y="681">4. Inventory is deducted and orders.add records the order and totals.</text>
+  <text x="466" y="708">5. The router appends an audit event, saves the database, and returns HTTP 201.</text>
+  <text x="72" y="718" class="ticket">Purple = workshop ticket modules</text>
+  <text x="72" y="743">Order changes cover list and cancel only.</text>
+</svg>
